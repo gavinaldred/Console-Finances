@@ -1,4 +1,47 @@
-console.log ("test")
+
+
+// You have been given a dataset composed of arrays with two fields, Date and Profit/Losses.
+
+// Your task is to write JavaScript code that analyzes the records to calculate each of the following:
+
+
+// 1. The total number of months included in the dataset. (done)
+// work out how many months there are in the data set in total - count the months in first position of each array (is this the length of the array)
+
+
+// Your task is to write JavaScript code that analyzes the records to calculate each of the following:
+
+// 2. The net total amount of Profit/Losses over the entire period.(done)
+// work out the net total of all the numeric values and print the total
+
+// 3. The average of the changes in Profit/Losses over the entire period.
+// total of the monthly changes / divided by the #months (-1) // (Total/Number of months)
+
+// You will need to track what the total change in profits are from month to month and then find the average.
+//how do I do this!!
+
+// 4. The greatest increase in profits (date and amount) over the entire period.
+//Print the month that had the largest increase in profit
+//how do I do this!!
+
+// 5. The greatest decrease in losses (date and amount) over the entire period.
+//Print the month that had the largest decrease in profit
+//how do I do this!!
+
+// When you open your code in the browser your resulting analysis should look similar to the following:
+// We need to console log at various points with these values
+
+
+// Financial Analysis
+// ----------------------------
+// Total Months: 25  //length of the array or number of months value
+// Total: $2561231  // add all the number values by accessing second value in array using for loop
+// Average  Change: $-2315.12
+// Greatest Increase in Profits: Feb-2012 ($1926159)
+// Greatest Decrease in Profits: Sep-2013 ($-2196167)
+// Your final code should print the analysis to the console.
+
+
 
 var finances = [
 ['Jan-2010', 867884],
@@ -88,3 +131,85 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+// 1. The total number of months included in the dataset. (done)
+const numberOfMonths = finances.length
+console.log(numberOfMonths) // this prints the number of months 86
+
+// 2. The net total amount of Profit/Losses over the entire period.(done)
+let sumOfProfits =0; 
+
+for (let i = 0; i < finances.length; i++) { //this is the loop to work out sumOfProfits
+    sumOfProfits += finances[i][1];
+}
+console.log(sumOfProfits) // this prints the total p&L
+
+
+
+
+        let datesOnly=[];
+        let numbersOnly = [];
+        for (let i = 0; i < finances.length-1; i++) {
+            numbersOnly [i] = finances[i+1][1] - finances[i][1];
+            datesOnly   [i] = finances[i+1][0];
+        }
+        
+
+console.log(datesOnly);        // all dates from month 2 [1] onwards e.g months with a difference
+console.log(numbersOnly);      // all differences from m2 - m1 
+
+
+        // 3. The average of the changes in Profit/Losses over the entire period.
+        // Getting sum of numbers
+     
+
+
+
+// loop to work out the sum of an arrray
+
+let sumOfNumbersOnly= 0;
+
+for (let i = 0; i < numbersOnly.length; i++) 
+{ sumOfNumbersOnly += numbersOnly[i]}
+
+console.log ("should be 196785! please" + sumOfNumbersOnly)
+
+console.log(sumOfNumbersOnly); // Prints: value of the sum of all the monthly value changes
+        
+        console.log(sumOfNumbersOnly); // Prints: value of the sum of all the monthly value changes
+        console.log(sumOfNumbersOnly / datesOnly.length) // prints the average change
+        console.log(sumOfNumbersOnly / datesOnly.length) // prints the average change
+
+// 4. The greatest increase in profits (date and amount) over the entire period.
+// we need to find the highest value in numbersOnly array and the index of that number
+let greatestValue
+let smallestValue
+
+
+for ( let i = 0; i < numbersOnly.length; i++) {
+    if (i === 0){
+        greatestValue = numbersOnly[i] 
+        smallestValue = numbersOnly[i]
+    
+    } else {
+        if(numbersOnly[i] > greatestValue){
+            greatestValue = numbersOnly[i]
+        }
+
+        if(numbersOnly[i] < smallestValue){
+            smallestValue = numbersOnly[i]
+        }
+    }
+}
+
+console.log(greatestValue) // biggest increase
+
+    
+
+
+
+
+// 5. The greatest decrease in losses (date and amount) over the entire period.
+// we need to find the lowest value in numbersOnly array and the index of that number
+console.log(smallestValue)  // biggest loss
+    
