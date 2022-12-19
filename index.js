@@ -202,7 +202,7 @@ for (let i = 0; i < numbersOnly.length; i++) {
         }
 
         if (numbersOnly[i] < smallestValue) {
-            smallestValue = numbersOnly[i]
+            smallestValue = numbersOnly[i];
         }
     }
 }
