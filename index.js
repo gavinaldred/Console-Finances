@@ -138,13 +138,14 @@ let dollarUSLocale = Intl.NumberFormat("en-US", {
     style: "currency", //makes number it currency
     currency: "USD", //$ sign
     useGrouping: false, // removes commas
+    minimumFractionDigits: 0,
 
 });
 
 
 // 1. The total number of months included in the dataset. (done)
 const numberOfMonths = finances.length
-console.log(numberOfMonths) // this prints the number of months 86
+// console.log(numberOfMonths) // this prints the number of months 86
 
 // 2. The net total amount of Profit/Losses over the entire period.(done)
 let sumOfProfits = 0;
@@ -152,7 +153,7 @@ let sumOfProfits = 0;
 for (let i = 0; i < finances.length; i++) { //this is the loop to work out sumOfProfits
     sumOfProfits += finances[i][1];
 }
-console.log(dollarUSLocale.format(sumOfProfits)) // this prints the total p&L
+// console.log(dollarUSLocale.format(sumOfProfits)) // this prints the total p&L
 
 
 // this splits the original array in to two new arrays, dates and numbers
@@ -165,8 +166,8 @@ for (let i = 0; i < finances.length - 1; i++) {
 }
 
 
-console.log(datesOnly); // all dates from month 2 [1] onwards e.g months with a difference
-console.log(numbersOnly); // all differences from m2 - m1 
+// console.log(datesOnly); // all dates from month 2 [1] onwards e.g months with a difference
+// console.log(numbersOnly); // all differences from m2 - m1 
 
 
 // 3. The average of the changes in Profit/Losses over the entire period.
@@ -181,8 +182,8 @@ for (let i = 0; i < numbersOnly.length; i++) {
 }
 
 
-console.log(sumOfNumbersOnly); // Prints: value of the sum of all the monthly value changes
-console.log(sumOfNumbersOnly / datesOnly.length) // prints the average change, sum of changes / number of months where there is a change, e.g 85
+// console.log(sumOfNumbersOnly); // Prints: value of the sum of all the monthly value changes
+// console.log(sumOfNumbersOnly / datesOnly.length) // prints the average change, sum of changes / number of months where there is a change, e.g 85
 
 
 // 4. The greatest increase in profits (date and amount) over the entire period.
@@ -207,13 +208,31 @@ for (let i = 0; i < numbersOnly.length; i++) {
     }
 }
 
-console.log(greatestValue) // biggest increase
+// console.log(greatestValue) // biggest increase
 
-
+// index of the biggest increase
+const max = Math.max(...numbersOnly);
+const inNumbersOnlyMax = numbersOnly.indexOf(max);
+// console.log(inNumbersOnlyMax); // this is the index [i] of the biggest increase which is 24     
+// console.log (datesOnly[24])
 
 
 
 
 // 5. The greatest decrease in losses (date and amount) over the entire period.
-// we need to find the lowest value in numbersOnly array and the index of that number
-console.log(smallestValue) // biggest loss
+// // we need to find the lowest value in numbersOnly array and the index of that number
+// console.log(smallestValue) // biggest loss
+
+const min = Math.min(...numbersOnly);
+const inNumbersOnlyMin = numbersOnly.indexOf(min);
+// console.log(inNumbersOnlyMin); // this is the index [i] of the biggest loss which is 43
+// console.log (datesOnly[43])
+
+//start the actual print of the work here
+console.log(`Financial Analysis`);
+console.log(`----------------------------`);
+console.log(`Total Months: ${numberOfMonths}`);
+console.log(`Total: ${dollarUSLocale.format(sumOfProfits)}`);
+console.log(`Average Change: ${dollarUSLocale.format(sumOfNumbersOnly / datesOnly.length)}`);
+console.log(`Greatest Increase in Profits: ${datesOnly[24]} (${dollarUSLocale.format(greatestValue)})`);
+console.log(`Biggest Decrease in Profits: ${datesOnly[43]} (${dollarUSLocale.format(smallestValue)})`);
