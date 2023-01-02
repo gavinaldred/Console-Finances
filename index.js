@@ -135,7 +135,7 @@ var finances = [
 
 // This creates a way to format a number as currency
 let dollarUSLocale = Intl.NumberFormat("en-US", {
-    style: "currency", //makes number it currency
+    style: "currency", //makes number a currency
     currency: "USD", //$ sign
     useGrouping: false, // removes commas
     minimumFractionDigits: 0,
@@ -153,18 +153,20 @@ let sumOfProfits = 0;
 for (let i = 0; i < finances.length; i++) { //this is the loop to work out sumOfProfits
     sumOfProfits += finances[i][1];
 }
-// console.log(dollarUSLocale.format(sumOfProfits)) // this prints the total p&L
 
 
-// this splits the original array in to two new arrays, dates and numbers
 
-let datesOnly = [];
+
+// this splits the original array in to a new array with months and the change in profit each month. 
+// it also pushes the value of dataProffitLoss into the numbersOnly variable. 
+
+
 let numbersOnly = [];
 for (let i = 0; i < finances.length - 1; i++) {
-    numbersOnly[i] = finances[i + 1][1] - finances[i][1];
-    datesOnly[i] = finances[i + 1][0];
-}
+    var dataProffitLoss = [finances[i + 1][0], finances[i + 1][1] - finances[i][1]];
 
+    numbersOnly.push(dataProffitLoss);
+}
 
 // console.log(datesOnly); // all dates from month 2 [1] onwards e.g months with a difference
 // console.log(numbersOnly); // all differences from m2 - m1 
@@ -173,58 +175,60 @@ for (let i = 0; i < finances.length - 1; i++) {
 // 3. The average of the changes in Profit/Losses over the entire period.
 // Getting sum of numbers
 
-// loop to work out the sum of an arrray // this works out the sum of difference, e.g. the sum of the numbersOnly array
+// loop to work out the sum of an arrray // this works out the sum of difference, e.g. the sum of the numbersOnly[1] array
 
 let sumOfNumbersOnly = 0;
 
 for (let i = 0; i < numbersOnly.length; i++) {
-    sumOfNumbersOnly += numbersOnly[i]
+    sumOfNumbersOnly += numbersOnly[i][1]
 }
 
 
 // console.log(sumOfNumbersOnly); // Prints: value of the sum of all the monthly value changes
-// console.log(sumOfNumbersOnly / datesOnly.length) // prints the average change, sum of changes / number of months where there is a change, e.g 85
+
 
 
 // 4. The greatest increase in profits (date and amount) over the entire period.
-// we need to find the highest value in numbersOnly array and the index of that number
-let greatestValue
-let smallestValue
+// we need to find the highest value in numbersOnly array.
+let greatestValue = [];
+let smallestValue = [];
 
 
 for (let i = 0; i < numbersOnly.length; i++) {
     if (i === 0) {
-        greatestValue = numbersOnly[i]
-        smallestValue = numbersOnly[i]
+        greatestValue[1] = numbersOnly[i][1]
+        smallestValue[1] = numbersOnly[i][1]
 
     } else {
-        if (numbersOnly[i] > greatestValue) {
-            greatestValue = numbersOnly[i]
+
+        if (numbersOnly[i][1] > greatestValue[1]) {
+
+            greatestValue = [numbersOnly[i][0], numbersOnly[i][1]];
         }
 
-        if (numbersOnly[i] < smallestValue) {
-            smallestValue = numbersOnly[i];
+        if (numbersOnly[i][1] < smallestValue[1]) {
+            smallestValue = [numbersOnly[i][0], numbersOnly[i][1]];
         }
     }
 }
 
-// console.log(greatestValue) // biggest increase
+//  console.log(greatestValue) // biggest increase
 
-// index of the biggest increase
-const max = Math.max(...numbersOnly);
-const inNumbersOnlyMax = numbersOnly.indexOf(max);
-// console.log(inNumbersOnlyMax); // this is the index [i] of the biggest increase which is 24     
-// console.log (datesOnly[24])
+// // index of the biggest increase
+// const max = Math.max(...numbersOnly);
+// const inNumbersOnlyMax = numbersOnly.indexOf(max);
+// // console.log(inNumbersOnlyMax); // this is the index [i] of the biggest increase which is 24     
+// // console.log (datesOnly[24])
 
 
 
 
 // 5. The greatest decrease in losses (date and amount) over the entire period.
 // // we need to find the lowest value in numbersOnly array and the index of that number
-// console.log(smallestValue) // biggest loss
+//  console.log(smallestValue) // biggest loss
 
-const min = Math.min(...numbersOnly);
-const inNumbersOnlyMin = numbersOnly.indexOf(min);
+// const min = Math.min(...numbersOnly);
+// const inNumbersOnlyMin = numbersOnly.indexOf(min);
 // console.log(inNumbersOnlyMin); // this is the index [i] of the biggest loss which is 43
 // console.log (datesOnly[43])
 
@@ -233,6 +237,7 @@ console.log(`Financial Analysis`);
 console.log(`----------------------------`);
 console.log(`Total Months: ${numberOfMonths}`);
 console.log(`Total: ${dollarUSLocale.format(sumOfProfits)}`);
-console.log(`Average Change: ${dollarUSLocale.format(sumOfNumbersOnly / datesOnly.length)}`);
-console.log(`Greatest Increase in Profits: ${datesOnly[24]} (${dollarUSLocale.format(greatestValue)})`);
-console.log(`Biggest Decrease in Profits: ${datesOnly[43]} (${dollarUSLocale.format(smallestValue)})`);
+console.log(`Average Change: ${dollarUSLocale.format(sumOfNumbersOnly / numbersOnly.length)}`);
+console.log(`Greatest Increase in Profits: ${greatestValue[0]} (${dollarUSLocale.format(greatestValue[1])})`);
+console.log(`Biggest Decrease in Profits: ${smallestValue[0]} (${dollarUSLocale.format(smallestValue[1])})`);
+
